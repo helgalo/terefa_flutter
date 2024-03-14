@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:tarefa_dev/views/config_view.dart';
+import 'package:tarefa_dev/views/config/config_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,10 +32,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 21, vertical: 21),
-          child: ConfigView(),
-        ),
+        child: ConfigView(),
       ),
     );
   }

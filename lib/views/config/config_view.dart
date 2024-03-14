@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tarefa_dev/core/app_colors.dart';
 import 'package:tarefa_dev/core/app_textstyles.dart';
+import 'package:tarefa_dev/views/config/widgets/period_modal_widget.dart';
+import 'package:tarefa_dev/widgets/buttons/basic_button_widget.dart';
 
 class ConfigView extends StatelessWidget {
   const ConfigView({super.key});
@@ -10,55 +10,60 @@ class ConfigView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context, constraints) => Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      builder: (context, constraints) => SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(21, 21, 21, 12),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              //Header
-              header(constraints),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 18),
-                child: Divider(
-                  color: AppColors.headerDivider,
-                ),
-              ),
-              body(constraints),
-            ],
-          ),
-          //Bottom
-          Row(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.purple,
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                height: 51,
-                width: 51,
-                margin: const EdgeInsets.only(right: 14),
-              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "João",
-                    style: AppTextStyles.inter16Medium
-                        .copyWith(color: AppColors.linkText),
-                  ),
-                  Text(
-                    "Sair",
-                    style: AppTextStyles.inter13Medium.copyWith(
-                      color: AppColors.linkText,
-                      decoration: TextDecoration.underline,
+                  //Header
+                  header(constraints),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    child: Divider(
+                      color: AppColors.headerDivider,
                     ),
                   ),
+                  body(constraints, context),
                 ],
-              )
+              ),
+              //Bottom
+              Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.purple,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    height: 51,
+                    width: 51,
+                    margin: const EdgeInsets.only(right: 14),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "João",
+                        style: AppTextStyles.inter16Medium
+                            .copyWith(color: AppColors.linkText),
+                      ),
+                      Text(
+                        "Sair",
+                        style: AppTextStyles.inter13Medium.copyWith(
+                          color: AppColors.linkText,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -111,7 +116,7 @@ class ConfigView extends StatelessWidget {
                       ),
                     ),
                     height: 31,
-                    width: ((constraints.maxWidth) * 0.59) - 12,
+                    width: ((constraints.maxWidth) * 0.59) - 42,
                     child: Center(
                       child: TextField(
                         scrollPadding: EdgeInsets.zero,
@@ -121,7 +126,7 @@ class ConfigView extends StatelessWidget {
                           ),
                           isDense: true,
                           border: InputBorder.none,
-                          hintText: "widget.hintText",
+                          hintText: "",
                           hintStyle: AppTextStyles.inter12Medium
                               .copyWith(color: AppColors.disabledText),
                         ),
@@ -141,7 +146,7 @@ class ConfigView extends StatelessWidget {
                   color: AppColors.headerBody,
                   borderRadius: BorderRadius.circular(9),
                 ),
-                width: (constraints.maxWidth) * 0.41,
+                width: ((constraints.maxWidth) * 0.41) - 12,
                 child: Row(
                   children: [
                     Container(
@@ -166,7 +171,7 @@ class ConfigView extends StatelessWidget {
         ],
       );
 
-  Widget body(BoxConstraints constraints) => Column(
+  Widget body(BoxConstraints constraints, BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -205,21 +210,33 @@ class ConfigView extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 12),
-                decoration: BoxDecoration(
-                  color: AppColors.blue,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                padding: const EdgeInsets.all(6),
-                child: Text(
-                  "Adicionar Período",
-                  style: AppTextStyles.inter10SemiBold
-                      .copyWith(color: AppColors.buttonText),
+              BasicButtonWidget(
+                title: "Adicionar Período",
+                onPressed: () => _dialogBuilder(
+                  constraints,
+                  context,
                 ),
               ),
             ],
           ),
         ],
       );
+
+  Future<void> _dialogBuilder(
+      BoxConstraints constraints, BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (_) {
+        return PeriodModalWidget(
+          constraints: constraints,
+          primaryButtonOnTap: () {
+            Navigator.pop(_);
+          },
+          secondaryButtonOnTap: () {
+            Navigator.pop(_);
+          },
+        );
+      },
+    );
+  }
 }

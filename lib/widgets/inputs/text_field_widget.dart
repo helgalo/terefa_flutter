@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:tarefa_dev/core/app_colors.dart';
 import 'package:tarefa_dev/core/app_textstyles.dart';
 
-class InputTextFieldWidget extends StatefulWidget {
+class InputTextFieldWidget extends StatelessWidget {
   final double? height;
   final double? width;
   final String? hintText;
@@ -22,34 +22,31 @@ class InputTextFieldWidget extends StatefulWidget {
   });
 
   @override
-  State<InputTextFieldWidget> createState() => _InputTextFieldWidgetState();
-}
-
-class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
-  @override
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(maxWidth: 376),
-      height: widget.height,
-      width: widget.width,
+      height: height,
+      width: width,
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
         color: AppColors.body,
       ),
       child: Row(
         children: [
           Expanded(
             child: TextField(
-              obscureText: widget.isObscure,
-              inputFormatters: widget.inputFormatters,
+              obscureText: isObscure,
+              inputFormatters: inputFormatters,
               decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(19),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
                 isDense: true,
                 border: InputBorder.none,
-                hintText: widget.hintText,
+                hintText: hintText,
                 hintStyle: AppTextStyles.inter12Medium
                     .copyWith(color: AppColors.disabledText),
               ),
-              controller: widget.controller,
+              controller: controller,
               style: AppTextStyles.inter12Medium
                   .copyWith(color: AppColors.headingText),
             ),
