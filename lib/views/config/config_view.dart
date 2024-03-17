@@ -229,6 +229,9 @@ class ConfigView extends StatelessWidget {
       builder: (_) {
         return PeriodModalWidget(
           constraints: constraints,
+          closeButtonOnTap: () {
+            Navigator.pop(_);
+          },
           primaryButtonOnTap: () {
             Navigator.pop(_);
           },

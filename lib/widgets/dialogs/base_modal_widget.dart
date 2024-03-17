@@ -3,13 +3,14 @@ import 'package:tarefa_dev/core/app_colors.dart';
 import 'package:tarefa_dev/core/app_textstyles.dart';
 import 'package:tarefa_dev/widgets/buttons/basic_button_widget.dart';
 
-class BaseModalWidget extends StatefulWidget {
+class BaseModalWidget extends StatelessWidget {
   final Widget body;
   final String title;
   final String primaryButtonTitle;
   final String secondaryButtonTitle;
   final Function()? primaryButtonOnTap;
   final Function()? secondaryButtonOnTap;
+  final Function()? closeButtonOnTap;
 
   const BaseModalWidget({
     super.key,
@@ -19,13 +20,9 @@ class BaseModalWidget extends StatefulWidget {
     this.secondaryButtonOnTap,
     this.primaryButtonTitle = "Done",
     this.secondaryButtonTitle = "Cancel",
+    this.closeButtonOnTap,
   });
 
-  @override
-  State<BaseModalWidget> createState() => _BaseModalWidgetState();
-}
-
-class _BaseModalWidgetState extends State<BaseModalWidget> {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -53,16 +50,19 @@ class _BaseModalWidgetState extends State<BaseModalWidget> {
                             width: 18,
                             height: 18,
                           ),
-                          Text(
-                            widget.title,
-                            style: AppTextStyles.inter12SemiBold,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 66),
+                            child: Text(
+                              title,
+                              style: AppTextStyles.inter12SemiBold,
+                            ),
                           ),
                           SizedBox(
                             height: 18,
                             width: 18,
                             child: IconButton(
                               padding: EdgeInsets.zero,
-                              onPressed: () {},
+                              onPressed: closeButtonOnTap,
                               icon: Icon(
                                 Icons.close,
                                 size: 18,
@@ -75,9 +75,9 @@ class _BaseModalWidgetState extends State<BaseModalWidget> {
                       const SizedBox(
                         height: 31,
                       ),
-                      widget.body,
-                      if (widget.primaryButtonOnTap != null ||
-                          widget.secondaryButtonOnTap != null)
+                      body,
+                      if (primaryButtonOnTap != null ||
+                          secondaryButtonOnTap != null)
                         Column(
                           children: [
                             const SizedBox(
@@ -86,25 +86,23 @@ class _BaseModalWidgetState extends State<BaseModalWidget> {
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                if (widget.primaryButtonOnTap != null)
+                                if (primaryButtonOnTap != null)
                                   BasicButtonWidget(
                                     type: ButtonTypes.delete,
-                                    onPressed: widget.secondaryButtonOnTap ==
-                                            null
-                                        ? widget.primaryButtonOnTap ?? () {}
-                                        : widget.secondaryButtonOnTap ?? () {},
-                                    title: widget.secondaryButtonOnTap == null
-                                        ? widget.primaryButtonTitle
-                                        : widget.secondaryButtonTitle,
+                                    onPressed: secondaryButtonOnTap == null
+                                        ? primaryButtonOnTap ?? () {}
+                                        : secondaryButtonOnTap ?? () {},
+                                    title: secondaryButtonOnTap == null
+                                        ? primaryButtonTitle
+                                        : secondaryButtonTitle,
                                   ),
-                                if (widget.primaryButtonOnTap != null &&
-                                    widget.secondaryButtonOnTap != null)
+                                if (primaryButtonOnTap != null &&
+                                    secondaryButtonOnTap != null)
                                   Padding(
                                     padding: const EdgeInsets.only(left: 59),
                                     child: BasicButtonWidget(
-                                      onPressed:
-                                          widget.primaryButtonOnTap ?? () {},
-                                      title: widget.primaryButtonTitle,
+                                      onPressed: primaryButtonOnTap ?? () {},
+                                      title: primaryButtonTitle,
                                       constraints: const BoxConstraints(
                                         minWidth: 89,
                                       ),

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tarefa_dev/core/app_colors.dart';
 import 'package:tarefa_dev/core/app_textstyles.dart';
@@ -30,33 +31,39 @@ class ModalTextFieldWidget extends StatelessWidget {
                 color: AppColors.headingText,
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.background,
-                borderRadius: BorderRadius.circular(7),
-                border: Border.all(
-                  width: 1,
-                  color: AppColors.headerStroke,
-                ),
-              ),
-              height: 31,
-              width: formFieldWidth,
-              child: Center(
-                child: TextField(
-                  scrollPadding: EdgeInsets.zero,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 5,
-                    ),
-                    isDense: true,
-                    border: InputBorder.none,
-                    hintText: hintText,
-                    hintStyle: AppTextStyles.inter12Medium
-                        .copyWith(color: AppColors.disabledText),
+            CupertinoButton(
+              minSize: 0,
+              padding: EdgeInsets.zero,
+              onPressed: onPressed,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.background,
+                  borderRadius: BorderRadius.circular(7),
+                  border: Border.all(
+                    width: 1,
+                    color: AppColors.headerStroke,
                   ),
-                  style: AppTextStyles.inter12Medium
-                      .copyWith(color: AppColors.headingText),
-                  textAlign: TextAlign.center,
+                ),
+                height: 31,
+                width: formFieldWidth,
+                child: Center(
+                  child: TextField(
+                    enabled: false,
+                    scrollPadding: EdgeInsets.zero,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                      ),
+                      isDense: true,
+                      border: InputBorder.none,
+                      hintText: hintText,
+                      hintStyle: AppTextStyles.inter12Medium
+                          .copyWith(color: AppColors.disabledText),
+                    ),
+                    style: AppTextStyles.inter12Medium
+                        .copyWith(color: AppColors.headingText),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
             ),

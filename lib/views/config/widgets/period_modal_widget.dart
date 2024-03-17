@@ -8,17 +8,20 @@ class PeriodModalWidget extends StatelessWidget {
   final BoxConstraints constraints;
   final Function() primaryButtonOnTap;
   final Function() secondaryButtonOnTap;
+  final Function() closeButtonOnTap;
   const PeriodModalWidget({
     super.key,
     required this.constraints,
     required this.primaryButtonOnTap,
     required this.secondaryButtonOnTap,
+    required this.closeButtonOnTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return BaseModalWidget(
       title: "Novo período",
+      closeButtonOnTap: closeButtonOnTap,
       body: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: constraints.maxWidth * 0.75),
         child: Column(
